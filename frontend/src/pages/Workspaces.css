@@ -1,0 +1,140 @@
+.workspaces-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.workspaces-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+}
+
+.workspaces-header h1 {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.workspaces-header p {
+  font-size: var(--text-base);
+  color: var(--c-555);
+}
+
+.workspaces-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: var(--c-fff);
+  border: 1px solid var(--c-e5);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  flex: 1;
+  max-width: 400px;
+  transition: border-color 0.2s;
+}
+
+.search-box:focus-within {
+  border-color: var(--c-333);
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  padding: 0.25rem 0.5rem;
+  font-size: var(--text-sm);
+  outline: none;
+  width: 100%;
+}
+
+.sort-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--c-fff);
+  border: 1px solid var(--c-e5);
+  border-radius: 8px;
+  font-size: var(--text-sm);
+  color: var(--c-555);
+  cursor: pointer;
+}
+
+.sort-box:hover {
+  background-color: var(--c-f5);
+}
+
+.workspaces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.workspace-card {
+  background-color: var(--c-fff);
+  border: 1px solid var(--c-e5);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.workspace-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--c-ccc);
+}
+
+.workspace-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.workspace-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: var(--c-f5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-111);
+}
+
+.workspace-card-content {
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.workspace-card-content h3 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.docs-count {
+  font-size: var(--text-sm);
+  color: var(--c-555);
+}
+
+.workspace-card-footer {
+  border-top: 1px solid var(--c-e5);
+  padding-top: 1rem;
+}
+
+.last-updated {
+  font-size: var(--text-xs);
+  color: var(--c-888);
+}

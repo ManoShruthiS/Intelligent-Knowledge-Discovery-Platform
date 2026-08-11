@@ -1,0 +1,134 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  background-color: var(--c-fff);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: var(--shadow-lg);
+  border: var(--border-strong);
+  overflow: hidden;
+  animation: modal-in 0.2s ease-out forwards;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-header {
+  padding: 1.5rem 1.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: var(--text-lg);
+  margin: 0;
+}
+
+.modal-close {
+  color: var(--c-555);
+  transition: color 0.15s;
+}
+
+.modal-close:hover {
+  color: var(--c-000);
+}
+
+.modal-body {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.modal-upload-area {
+  border: 1.5px dashed var(--c-ccc);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--c-f5);
+}
+
+.modal-upload-area:hover, .modal-upload-area.drag-active {
+  border-color: var(--c-000);
+  background-color: var(--c-fff);
+}
+
+.upload-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 32px;
+  background-color: var(--c-fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: var(--border-subtle);
+}
+
+.upload-title {
+  font-size: var(--text-lg);
+  margin-bottom: 0.5rem;
+}
+
+.upload-desc {
+  font-size: var(--text-sm);
+  color: var(--c-555);
+  margin-bottom: 1rem;
+}
+
+.upload-formats {
+  font-size: var(--text-xs);
+  color: var(--c-888);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-upload-area.processing,
+.modal-upload-area.success,
+.modal-upload-area.error {
+  cursor: default;
+  background-color: var(--c-fff);
+  border-style: solid;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+  color: var(--c-555);
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.success-icon {
+  color: var(--c-000);
+  margin-bottom: 1rem;
+}
+
+.error-icon {
+  color: var(--c-000);
+  margin-bottom: 1rem;
+}
+
+.error-text {
+  color: var(--c-333);
+}

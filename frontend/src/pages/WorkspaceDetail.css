@@ -1,0 +1,155 @@
+.ws-detail-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--c-555);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin-bottom: 2rem;
+  transition: color 0.2s;
+}
+
+.back-btn:hover {
+  color: var(--c-000);
+}
+
+.ws-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+}
+
+.ws-title-area h1 {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.ws-title-area p {
+  font-size: var(--text-base);
+  color: var(--c-555);
+}
+
+.ws-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.ws-tabs {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--c-e5);
+  margin-bottom: 2rem;
+}
+
+.docs-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.docs-list {
+  background-color: var(--c-fff);
+  border: 1px solid var(--c-e5);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.docs-list-header {
+  display: flex;
+  padding: 1rem 1.5rem;
+  background-color: var(--c-f5);
+  border-bottom: 1px solid var(--c-e5);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--c-888);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.doc-list-item {
+  display: flex;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--c-e5);
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.doc-list-item:last-child {
+  border-bottom: none;
+}
+
+.doc-list-item:hover {
+  background-color: var(--c-f5);
+}
+
+.col-name {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 500;
+  color: var(--c-111);
+}
+
+.col-status {
+  flex: 1;
+}
+
+.col-date {
+  flex: 1;
+  color: var(--c-555);
+  font-size: var(--text-sm);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+
+.status-badge.success {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+}
+
+.ws-synthesize-view {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+.synthesize-empty {
+  text-align: center;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.synthesize-empty h3 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.synthesize-empty p {
+  color: var(--c-555);
+  font-size: var(--text-sm);
+}

@@ -1,0 +1,110 @@
+.workspace-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.workspace-header {
+  border-bottom: var(--border-subtle);
+  margin-bottom: 2rem;
+}
+
+.workspace-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.workspace-doc-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.doc-icon {
+  color: var(--c-333);
+}
+
+.doc-title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+.workspace-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-share-mobile {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border: var(--border-strong);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+}
+
+.workspace-tabs {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.workspace-tabs::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.tab-item {
+  padding-bottom: 0.75rem;
+  color: var(--c-555);
+  font-weight: 500;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.tab-item:hover {
+  color: var(--c-111);
+}
+
+.tab-item.active {
+  color: var(--c-000);
+  border-bottom-color: var(--c-000);
+  font-weight: 600;
+}
+
+.workspace-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Common tab content styles */
+.tab-section {
+  margin-bottom: 2.5rem;
+}
+
+.tab-section-title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.info-card {
+  background-color: var(--c-fff);
+  border: var(--border-subtle);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .btn-share-mobile {
+    display: flex;
+  }
+}
