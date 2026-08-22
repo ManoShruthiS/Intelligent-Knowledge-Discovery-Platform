@@ -198,9 +198,7 @@ function AskAITab() {
                 </div>
                 <div className="message-body">
                   <div className="text typing-indicator">
-                    {mode === 'project'
-                      ? 'ORBOT is working through the problem...'
-                      : 'ORBOT is analyzing the research...'}
+                    ORBOT is thinking...
                   </div>
                 </div>
               </div>

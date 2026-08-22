@@ -515,9 +515,7 @@ function WorkspaceDetail() {
               <div className="chat-message assistant loading" style={{ display: 'flex', gap: '1rem', padding: '1rem' }}>
                 <Orbot size={24} state="searching" />
                 <div style={{ padding: '0.5rem' }}>
-                  {chatMode === 'project'
-                    ? 'ORBOT is working through the problem...'
-                    : 'ORBOT is analyzing the research...'}
+                  ORBOT is thinking...
                 </div>
               </div>
             )}

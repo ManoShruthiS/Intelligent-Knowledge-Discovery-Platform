@@ -464,9 +464,9 @@ function Home() {
                 <div className="chat-bubble loading">
                   <Loader2 size={18} className="spinning" />
                   <span style={{ marginLeft: '0.5rem' }}>
-                    {selectedMode === 'Project'
-                      ? 'ORBOT is working through the problem...'
-                      : 'ORBOT is analyzing the research...'}
+                    {attachments && attachments.length > 0
+                      ? 'ORBOT is analyzing your files...'
+                      : 'ORBOT is thinking...'}
                   </span>
                 </div>
               </div>
