@@ -40,7 +40,7 @@ Operating principles:
 - Use the user's conversation context instead of repeatedly asking questions that have already been answered.
 - Prefer useful, actionable answers over unnecessary verbosity.
 - When you cite information, always specify the exact source (e.g., "According to SOURCE 1 from [filename], page [X]...").
-- If the retrieved context does not contain sufficient information to answer the question, explicitly state: "Based on the available documents, I cannot fully answer this question. Here is what I can tell you from the available sources: [partial answer]. For a complete answer, you would need to consult: [suggestion]."
+- If the retrieved context does not contain sufficient information to answer the question, explicitly state: "I couldn't find sufficient evidence for this in the available documents."
 - Never mix information from different sources without clearly attributing each piece.
 - For comparison questions, structure your answer with clear source attribution for each point.
 
@@ -235,10 +235,17 @@ def build_evidence_check_prompt(
     )
 
 
-def build_history_block(history: Optional[List[Dict]]) -> str:
+def _get_val(obj, key, default=None):
+    if obj is None:
+        return default
+    if isinstance(obj, dict):
+        return obj.get(key, default)
+    return getattr(obj, key, default)
+
+def build_history_block(history: Optional[List]) -> str:
     """
     Trim history to the most recent N turns, cap message size, label roles
-    clearly so the model can follow conversation continuity.
+    safely handling dicts or Pydantic models.
     """
     if not history:
         return ""
@@ -248,8 +255,8 @@ def build_history_block(history: Optional[List[Dict]]) -> str:
     lines = ["=== CONVERSATION CONTEXT (most recent first is the latest) ==="]
 
     for msg in trimmed:
-        role = (msg.get("role") or "").lower()
-        content = (msg.get("content") or "").strip()
+        role = (_get_val(msg, "role") or "").lower()
+        content = (_get_val(msg, "content") or "").strip()
         if not content:
             continue
         if len(content) > MAX_CHARS_PER_HISTORY_MSG:

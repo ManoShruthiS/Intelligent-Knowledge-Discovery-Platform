@@ -477,12 +477,16 @@ class AttachmentData(BaseModel):
     documentId: Optional[str] = None
 
 class AskQuery(BaseModel):
-    question: str
+    question: Optional[str] = None
+    message: Optional[str] = None
+    query: Optional[str] = None
     mode: str = "Research"
     history: List[MessageData] = []
     attachments: List[AttachmentData] = []
     document_id: Optional[str] = None
+    documentId: Optional[str] = None
     workspace_id: Optional[str] = None
+    workspaceId: Optional[str] = None
     top_k: int = 5
 
 class CompareQuery(BaseModel):
@@ -557,17 +561,21 @@ def ask_question(payload: AskQuery):
     """
     Answers a user question grounded in retrieved document chunks.
     """
-    if not payload.question.strip():
+    q_text = payload.question or payload.message or payload.query or ""
+    if not q_text.strip():
         raise HTTPException(status_code=400, detail="Question cannot be empty.")
         
+    doc_id = payload.document_id or payload.documentId
+    ws_id = payload.workspace_id or payload.workspaceId
+
     try:
         response = rag_service.ask(
-            question=payload.question,
+            question=q_text.strip(),
             mode=payload.mode,
             history=payload.history,
             attachments=payload.attachments,
-            document_id=payload.document_id,
-            workspace_id=payload.workspace_id,
+            document_id=doc_id,
+            workspace_id=ws_id,
             top_k=payload.top_k
         )
         return response

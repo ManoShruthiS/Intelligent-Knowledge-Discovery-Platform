@@ -387,12 +387,18 @@ export const getAllTags = async () => request("/tags");
 
 // ---------- Search + Ask ----------
 
-export const askOrbot = async (payload) =>
-  request("/ask", {
+export const askOrbot = async (payload) => {
+  const qText = payload.question || payload.message || payload.query || "";
+  return request("/ask", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      ...payload,
+      question: qText,
+      message: qText,
+    }),
   });
+};
 
 export const searchDocuments = async ({
   query,
