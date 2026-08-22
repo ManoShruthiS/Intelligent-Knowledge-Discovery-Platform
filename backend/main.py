@@ -149,6 +149,7 @@ async def rate_limit_middleware(request: Request, call_next):
 @app.get("/api/health")
 def health_check():
     """Basic health check endpoint to verify the backend and configuration are running."""
+    from ai.config import ai_config
     return {
         "status": "healthy", 
         "message": "Backend is running!",
