@@ -77,7 +77,20 @@ class RAGService:
         # Check if user query is a simple greeting / conversational phrase
         clean_q = re.sub(r'[^\w\s]', '', question.strip().lower())
         q_words = clean_q.split()
-        is_greeting = clean_q in {"hi", "hello", "hey", "greetings", "good morning", "good afternoon", "who are you", "what can you do", "help"} or (len(q_words) <= 3 and any(w in {"hi", "hello", "hey"} for w in q_words))
+        CONVERSATIONAL_PHRASES = {
+            "hi", "hello", "hey", "greetings", "good morning", "good afternoon", "good evening",
+            "you good", "how are you", "how are u", "whats up", "what's up", "who are you",
+            "what can you do", "help", "thanks", "thank you", "cool", "ok", "okay", "awesome",
+            "great", "are you good", "you ok", "you okay"
+        }
+        is_greeting = clean_q in CONVERSATIONAL_PHRASES or (
+            len(q_words) <= 4 and any(
+                phrase in clean_q for phrase in [
+                    "you good", "how are you", "who are you", "what can you do",
+                    "whats up", "what is your name", "are you good", "you ok"
+                ]
+            )
+        )
 
         # 1. Resolve retrieval scope with latency tracking.
         retrieval_start = time.perf_counter()
