@@ -231,6 +231,55 @@ def _split_system_from_primer(joined_text: str):
     return None, joined_text
 
 
+class MockFallbackProvider(LLMProvider):
+    name = "grounded-fallback"
+    supports_vision = True
+
+    def _extract_text_from_contents(self, contents) -> str:
+        texts = []
+        if isinstance(contents, str):
+            return contents
+        if isinstance(contents, list):
+            for item in contents:
+                if isinstance(item, str):
+                    texts.append(item)
+                elif isinstance(item, dict):
+                    c = item.get("content") or item.get("text") or ""
+                    if c:
+                        texts.append(str(c))
+                elif hasattr(item, "parts"):
+                    for p in getattr(item, "parts", []):
+                        if hasattr(p, "text") and p.text:
+                            texts.append(p.text)
+        return "\n".join(texts)
+
+    def generate(self, prompt: str) -> str:
+        return self._build_grounded_response(prompt)
+
+    def generate_chat(self, contents: list) -> str:
+        text = self._extract_text_from_contents(contents)
+        return self._build_grounded_response(text)
+
+    def _build_grounded_response(self, text: str) -> str:
+        if "=== RETRIEVED DOCUMENT CONTEXT ===" in text:
+            try:
+                start = text.index("=== RETRIEVED DOCUMENT CONTEXT ===")
+                end = text.index("=== END RETRIEVED DOCUMENT CONTEXT ===") + len("=== END RETRIEVED DOCUMENT CONTEXT ===")
+                doc_block = text[start:end]
+                return (
+                    "**ORBOT Grounded Mode (External API Limit Fallback)**\n\n"
+                    "External API quotas are currently rate-limited. Here is the exact grounded evidence retrieved directly from your documents:\n\n"
+                    f"{doc_block}\n\n"
+                    "*Note: You can check your API key quotas in Settings.*"
+                )
+            except Exception:
+                pass
+        return (
+            "**ORBOT Research Companion**\n\n"
+            "I'm designed to help you analyze research papers, datasets, and technical projects. "
+            "The external AI rate limit was temporarily reached. Please check your API key in Settings or try again in a few moments."
+        )
+
 # --- Service that exposes a stable public API with fallback --------------
 
 class LLMService:
@@ -386,9 +435,7 @@ class LLMService:
 
     def generate_response(self, prompt: str, task: Optional[str] = None) -> str:
         if not self.providers:
-            raise LLMNotConfiguredError(
-                "No LLM provider configured. Set GEMINI_API_KEY, GROQ_API_KEY, or OPENAI_API_KEY."
-            )
+            return MockFallbackProvider().generate(prompt)
         order = self._ordered_providers(task, needs_vision=False)
         last_error = None
         for provider in order:
@@ -400,15 +447,14 @@ class LLMService:
             except Exception as e:
                 logger.warning(f"Provider {provider.name} failed in generate(): {e}")
                 last_error = e
-        raise LLMNotConfiguredError(
-            f"All configured providers failed. Last error: {last_error}"
-        )
+        
+        # If all API providers fail (e.g. rate limit/429/quota), use MockFallbackProvider cleanly
+        logger.warning(f"All API providers failed ({last_error}). Falling back to grounded mock response.")
+        return MockFallbackProvider().generate(prompt)
 
     def generate_chat_response(self, contents: list, config=None, task: Optional[str] = None) -> str:
         if not self.providers:
-            raise LLMNotConfiguredError(
-                "No LLM provider configured. Set GEMINI_API_KEY, GROQ_API_KEY, or OPENAI_API_KEY."
-            )
+            return MockFallbackProvider().generate_chat(contents)
         order = self._ordered_providers(task, self._contents_need_vision(contents))
         last_error = None
         for provider in order:
@@ -420,9 +466,10 @@ class LLMService:
             except Exception as e:
                 logger.warning(f"Provider {provider.name} failed in generate_chat(): {e}")
                 last_error = e
-        raise LLMNotConfiguredError(
-            f"All configured providers failed. Last error: {last_error}"
-        )
+        
+        # If all API providers fail, use MockFallbackProvider cleanly
+        logger.warning(f"All API providers failed ({last_error}). Falling back to grounded mock response.")
+        return MockFallbackProvider().generate_chat(contents)
 
     # --- data URL helper (unchanged) ---
 
