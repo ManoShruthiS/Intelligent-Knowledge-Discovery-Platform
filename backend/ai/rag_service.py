@@ -121,12 +121,26 @@ class RAGService:
         moderate_relevance_chunks = len(chunks) - high_relevance_chunks
         used_doc_context = bool(chunks)
 
-        # 4. Insufficient evidence detection.
-        insufficient_evidence = False
-        if not chunks:
-            insufficient_evidence = True
-        elif chunks and chunks[0]["similarity"] > INSUFFICIENT_EVIDENCE_DISTANCE:
-            insufficient_evidence = True
+        # 4. Insufficient evidence detection & trace formatting.
+        if is_greeting:
+            insufficient_evidence = False
+            trace = None
+            confidence_label = None
+        else:
+            insufficient_evidence = False
+            if not chunks:
+                insufficient_evidence = True
+            elif chunks and chunks[0]["similarity"] > INSUFFICIENT_EVIDENCE_DISTANCE:
+                insufficient_evidence = True
+
+            trace = _build_trace(
+                chunks, used_doc_context, mode_norm, insufficient_evidence,
+                high_relevance_chunks, moderate_relevance_chunks,
+            )
+            confidence_label = _confidence_label(
+                high_relevance_chunks, moderate_relevance_chunks,
+                insufficient_evidence,
+            )
 
         # 5. Call Gemini with the composed ORBOT prompt.
         llm_start = time.perf_counter()
@@ -145,23 +159,18 @@ class RAGService:
 
         # 6. Generate follow-up questions (lightweight second LLM call).
         followups: List[str] = []
-        try:
-            followups = self._generate_followups(
-                question=question,
-                answer=answer,
-                chunks=chunks,
-                mode=mode_norm,
-            )
-        except Exception as e:
-            logger.warning(f"Follow-up generation failed: {e}")
+        if not is_greeting:
+            try:
+                followups = self._generate_followups(
+                    question=question,
+                    answer=answer,
+                    chunks=chunks,
+                    mode=mode_norm,
+                )
+            except Exception as e:
+                logger.warning(f"Follow-up generation failed: {e}")
 
-        # 7. Cross-document attribution for trace.
-        trace = _build_trace(
-            chunks, used_doc_context, mode_norm, insufficient_evidence,
-            high_relevance_chunks, moderate_relevance_chunks,
-        )
-
-        # 8. Provider name for metadata.
+        # 7. Provider name for metadata.
         provider_name = self._active_provider_name()
 
         return {
@@ -170,10 +179,7 @@ class RAGService:
             "mode": mode_norm,
             "used_doc_context": used_doc_context,
             "trace": trace,
-            "confidence": _confidence_label(
-                high_relevance_chunks, moderate_relevance_chunks,
-                insufficient_evidence,
-            ),
+            "confidence": confidence_label,
             "insufficient_evidence": insufficient_evidence,
             "high_relevance_chunks": high_relevance_chunks,
             "moderate_relevance_chunks": moderate_relevance_chunks,
