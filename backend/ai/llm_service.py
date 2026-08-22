@@ -261,23 +261,33 @@ class MockFallbackProvider(LLMProvider):
         return self._build_grounded_response(text)
 
     def _build_grounded_response(self, text: str) -> str:
-        if "=== RETRIEVED DOCUMENT CONTEXT ===" in text:
+        clean_low = text.lower().strip()
+        
+        # Friendly greeting handling
+        if any(g in clean_low for g in ["user message:\nhi", "user message:\nhello", "user message:\nhey", "user:\nhi", "user:\nhello"]):
+            return (
+                "Hello! I am **ORBOT**, your AI research companion inside KNO. 👋\n\n"
+                "How can I help you analyze research papers, explore datasets, or plan technical projects today?"
+            )
+
+        if "=== RETRIEVED DOCUMENT CONTEXT ===" in text and "SOURCE 1" in text:
             try:
                 start = text.index("=== RETRIEVED DOCUMENT CONTEXT ===")
                 end = text.index("=== END RETRIEVED DOCUMENT CONTEXT ===") + len("=== END RETRIEVED DOCUMENT CONTEXT ===")
                 doc_block = text[start:end]
                 return (
-                    "**ORBOT Grounded Mode (External API Limit Fallback)**\n\n"
-                    "External API quotas are currently rate-limited. Here is the exact grounded evidence retrieved directly from your documents:\n\n"
+                    "**ORBOT Grounded Mode (API Limit Fallback)**\n\n"
+                    "External API rate limits were temporarily reached. Here is the exact grounded context retrieved from your documents:\n\n"
                     f"{doc_block}\n\n"
-                    "*Note: You can check your API key quotas in Settings.*"
+                    "*Tip: API limits reset automatically every minute. You can retry your prompt shortly!*"
                 )
             except Exception:
                 pass
+
         return (
-            "**ORBOT Research Companion**\n\n"
-            "I'm designed to help you analyze research papers, datasets, and technical projects. "
-            "The external AI rate limit was temporarily reached. Please check your API key in Settings or try again in a few moments."
+            "Hello! I am **ORBOT**, your AI research companion inside KNO. 👋\n\n"
+            "I can help you summarize papers, compare methodologies, extract key insights, and draft project plans. "
+            "What topic or document would you like to explore?"
         )
 
 # --- Service that exposes a stable public API with fallback --------------

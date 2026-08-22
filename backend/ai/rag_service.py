@@ -74,14 +74,22 @@ class RAGService:
         history = history or []
         attachments = attachments or []
 
+        # Check if user query is a simple greeting / conversational phrase
+        clean_q = re.sub(r'[^\w\s]', '', question.strip().lower())
+        q_words = clean_q.split()
+        is_greeting = clean_q in {"hi", "hello", "hey", "greetings", "good morning", "good afternoon", "who are you", "what can you do", "help"} or (len(q_words) <= 3 and any(w in {"hi", "hello", "hey"} for w in q_words))
+
         # 1. Resolve retrieval scope with latency tracking.
         retrieval_start = time.perf_counter()
-        chunks, total_before_filter = self._retrieve_with_stats(
-            question=question,
-            document_id=document_id,
-            workspace_id=workspace_id,
-            top_k=top_k,
-        )
+        if is_greeting:
+            chunks, total_before_filter = [], 0
+        else:
+            chunks, total_before_filter = self._retrieve_with_stats(
+                question=question,
+                document_id=document_id,
+                workspace_id=workspace_id,
+                top_k=top_k,
+            )
         retrieval_ms = round((time.perf_counter() - retrieval_start) * 1000, 1)
 
         # 2. Multi-step retrieval for complex queries with sparse results.
