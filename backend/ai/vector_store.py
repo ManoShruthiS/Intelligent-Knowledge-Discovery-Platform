@@ -1,11 +1,14 @@
 import os
 import json
+import logging
 import faiss
 import numpy as np
 from typing import List, Dict
 
 import database.database as db
 from ai.embeddings import EmbeddingService
+
+logger = logging.getLogger(__name__)
 
 # 384 is the embedding dimension for sentence-transformers/all-MiniLM-L6-v2
 VECTOR_DIMENSION = 384
@@ -39,7 +42,7 @@ class VectorStore:
                     self.mapping = {int(k): v for k, v in loaded_mapping.items()}
                     self.next_id = max(self.mapping.keys()) + 1 if self.mapping else 0
             except Exception as e:
-                print(f"Failed to load vector store: {e}. Creating a new one.")
+                logger.info(f"Failed to load vector store: {e}. Creating a new one.")
                 self._create_new_index()
         else:
             self._create_new_index()
@@ -86,13 +89,13 @@ class VectorStore:
         Completely rebuilds the FAISS index from the SQLite database.
         This is crucial when documents are deleted to remove orphaned vectors safely.
         """
-        print("Rebuilding FAISS vector index from SQLite database...")
+        logger.info("Rebuilding FAISS vector index from SQLite database...")
         self._create_new_index()
         
         chunks = db.get_all_chunks()
         if not chunks:
             self._save()
-            print("No chunks found. Vector index cleared.")
+            logger.info("No chunks found. Vector index cleared.")
             return
             
         texts_to_embed = []
@@ -110,21 +113,21 @@ class VectorStore:
                         valid_embeddings.append(emb_list)
                         continue
                 except Exception as e:
-                    print(f"Error loading embedding for chunk {chunk['id']}: {e}")
+                    logger.error(f"Error loading embedding for chunk {chunk['id']}: {e}")
             
             # If no embedding or failed, we need to regenerate
             texts_to_embed.append(chunk['text'])
             chunk_ids_to_embed.append(chunk['id'])
             
         if texts_to_embed:
-            print(f"Generating missing embeddings for {len(texts_to_embed)} chunks...")
+            logger.info(f"Generating missing embeddings for {len(texts_to_embed)} chunks...")
             embedder = EmbeddingService()
             new_embeddings = embedder.embed_texts(texts_to_embed)
             valid_chunk_ids.extend(chunk_ids_to_embed)
             valid_embeddings.extend(new_embeddings)
             
         self.add_embeddings(valid_chunk_ids, valid_embeddings)
-        print(f"Successfully rebuilt FAISS vector index with {len(valid_chunk_ids)} chunks.")
+        logger.info(f"Successfully rebuilt FAISS vector index with {len(valid_chunk_ids)} chunks.")
 
     def search(self, query_embedding: List[float], top_k: int = 5) -> List[Dict]:
         """

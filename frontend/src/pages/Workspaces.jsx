@@ -16,6 +16,7 @@ function Workspaces() {
   const [newWorkspaceName, setNewWorkspaceName] = useState('');
   const [newWorkspaceDesc, setNewWorkspaceDesc] = useState('');
   const [isCreating, setIsCreating] = useState(false);
+  const [actionError, setActionError] = useState(null);
 
   useEffect(() => {
     fetchWorkspaces();
@@ -36,8 +37,9 @@ function Workspaces() {
   const handleCreateWorkspace = async (e) => {
     e.preventDefault();
     if (!newWorkspaceName.trim()) return;
-    
+
     setIsCreating(true);
+    setActionError(null);
     try {
       const ws = await createWorkspace(newWorkspaceName, newWorkspaceDesc);
       setWorkspaces([ws, ...workspaces]);
@@ -45,7 +47,7 @@ function Workspaces() {
       setNewWorkspaceName('');
       setNewWorkspaceDesc('');
     } catch (err) {
-      alert("Failed to create workspace: " + err.message);
+      setActionError(err.message || 'Failed to create workspace.');
     } finally {
       setIsCreating(false);
     }
@@ -53,13 +55,13 @@ function Workspaces() {
 
   const handleDeleteWorkspace = async (e, id) => {
     e.stopPropagation();
-    if (window.confirm("Are you sure you want to delete this workspace?")) {
-      try {
-        await deleteWorkspace(id);
-        setWorkspaces(workspaces.filter(ws => ws.id !== id));
-      } catch (err) {
-        alert("Failed to delete workspace: " + err.message);
-      }
+    if (!window.confirm("Are you sure you want to delete this workspace?")) return;
+    setActionError(null);
+    try {
+      await deleteWorkspace(id);
+      setWorkspaces(workspaces.filter(ws => ws.id !== id));
+    } catch (err) {
+      setActionError(err.message || 'Failed to delete workspace.');
     }
   };
 
@@ -101,6 +103,8 @@ function Workspaces() {
         <div className="loading-state">Loading workspaces...</div>
       ) : error ? (
         <div className="error-state">{error}</div>
+      ) : actionError ? (
+        <div className="error-state">{actionError}</div>
       ) : filteredWorkspaces.length === 0 ? (
         <div className="empty-state">
           <div className="empty-icon"><FolderKanban size={48} color="var(--c-eee)" strokeWidth={1} /></div>

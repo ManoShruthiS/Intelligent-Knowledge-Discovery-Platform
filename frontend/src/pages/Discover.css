@@ -209,3 +209,29 @@
 .topic-tag:hover {
   background-color: var(--c-f5);
 }
+
+.discover-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 2rem;
+  gap: 1rem;
+  color: var(--c-555);
+}
+
+.discover-empty-state h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--c-333);
+  margin: 0;
+}
+
+.discover-empty-state p {
+  font-size: 0.9rem;
+  color: var(--c-666);
+  max-width: 480px;
+  line-height: 1.6;
+  margin: 0;
+}

@@ -1,8 +1,9 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { History } from 'lucide-react';
 
 function OverviewTab() {
-  const { document } = useOutletContext();
+  const { document, versions } = useOutletContext();
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -58,6 +59,50 @@ function OverviewTab() {
           {document.extracted_text}
         </div>
       </section>
+
+      {versions && versions.length > 0 && (
+        <section className="tab-section">
+          <h2 className="tab-section-title"><History size={16} style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />Version History</h2>
+          <div className="info-card">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+              {versions.map((v, idx) => (
+                <div key={v.id} style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '0.75rem 0',
+                  borderBottom: idx < versions.length - 1 ? '1px solid var(--c-e5)' : 'none',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{
+                      width: '28px',
+                      height: '28px',
+                      borderRadius: '50%',
+                      backgroundColor: idx === 0 ? 'var(--c-000)' : 'var(--c-e5)',
+                      color: idx === 0 ? 'var(--c-fff)' : 'var(--c-555)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      flexShrink: 0,
+                    }}>
+                      v{v.version_number}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 500, fontSize: 'var(--text-sm)' }}>{v.title || 'Untitled'}</div>
+                      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--c-555)' }}>
+                        {formatDate(v.created_at)}
+                        {idx === 0 && <span style={{ marginLeft: '0.5rem', color: 'var(--c-000)', fontWeight: 500 }}>Latest</span>}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

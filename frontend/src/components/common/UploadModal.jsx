@@ -149,7 +149,7 @@ const UploadModal = ({ isOpen, onClose }) => {
       <div className="modal-content" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
           <h3>Upload Papers</h3>
-          <button className="modal-close" onClick={resetAndClose}>
+          <button className="modal-close" onClick={resetAndClose} aria-label="Close upload dialog">
             <X size={20} strokeWidth={1.5} />
           </button>
         </div>

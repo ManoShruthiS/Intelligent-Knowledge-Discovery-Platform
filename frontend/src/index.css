@@ -209,6 +209,69 @@ p {
   background: var(--c-ccc);
 }
 
+/* Dark Mode */
+[data-theme="dark"] {
+  --c-111: #e0e0e0;
+  --c-1a: #d0d0d0;
+  --c-222: #ccc;
+  --c-333: #aaa;
+  --c-555: #aaa;
+  --c-666: #888;
+  --c-777: #888;
+  --c-888: #666;
+  --c-aaa: #666;
+  --c-ccc: #555;
+  --c-d4: #444;
+  --c-e5: #444;
+  --c-e8: #383838;
+  --c-f5: #222;
+  --c-fff: #1a1a1a;
+  --c-000: #e0e0e0;
+}
+
+[data-theme="dark"] body {
+  background-color: #111;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] p {
+  color: #aaa;
+}
+
+[data-theme="dark"] .card {
+  background-color: #1a1a1a;
+  border-color: #333;
+}
+
+[data-theme="dark"] .btn-secondary {
+  background-color: #222;
+  border-color: #444;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+  background-color: #1a1a1a;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 /* Mobile responsive resets */
 @media (max-width: 768px) {
   .scrollable-area {

@@ -7,11 +7,8 @@ import {
   FolderKanban,
   Clock, 
   Settings, 
-  Plus,
-  FileText,
-  File,
   X,
-  Menu
+  User
 } from 'lucide-react';
 import './Sidebar.css';
 import Orbot from '../common/Orbot';
@@ -55,46 +52,42 @@ function Sidebar({ isOpen, toggleSidebar }) {
 
         <nav className="sidebar-nav">
           <div className="nav-section">
-            <NavLink to="/" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} end onClick={closeOnMobile}>
+            <NavLink to="/" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} end onClick={closeOnMobile} aria-label="Home">
               <Home size={18} strokeWidth={1.5} />
               Home
             </NavLink>
-            <NavLink to="/discover" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeOnMobile}>
+            <NavLink to="/discover" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeOnMobile} aria-label="Discover">
               <Search size={18} strokeWidth={1.5} />
               Discover
             </NavLink>
-            <NavLink to="/documents" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeOnMobile}>
+            <NavLink to="/documents" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeOnMobile} aria-label="Library">
               <Library size={18} strokeWidth={1.5} />
               Library
             </NavLink>
-            <NavLink to="/workspaces" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeOnMobile}>
+            <NavLink to="/workspaces" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeOnMobile} aria-label="Workspaces">
               <FolderKanban size={18} strokeWidth={1.5} />
               Workspaces
             </NavLink>
           </div>
 
           <div className="nav-section">
-            <span className="nav-section-title">RECENT WORKSPACES</span>
-            <NavLink to="/workspaces/fake-news-detection" className="nav-item nav-item-recent" onClick={closeOnMobile}>
-              <FileText size={16} strokeWidth={1.5} />
-              Fake News Detection
-            </NavLink>
-            <NavLink to="/workspaces/nlp-research" className="nav-item nav-item-recent" onClick={closeOnMobile}>
-              <FileText size={16} strokeWidth={1.5} />
-              NLP Research
-            </NavLink>
-            <NavLink to="/workspaces/medical-imaging" className="nav-item nav-item-recent" onClick={closeOnMobile}>
-              <FileText size={16} strokeWidth={1.5} />
-              Medical Imaging
-            </NavLink>
           </div>
         </nav>
 
         <div className="sidebar-footer">
-          <NavLink to="/settings" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'} onClick={closeOnMobile}>
-            <Settings size={18} strokeWidth={1.5} />
-            Settings
-          </NavLink>
+          <div className="sidebar-profile-block">
+            <div className="profile-info-left" onClick={() => navigate('/settings')}>
+              <div className="profile-avatar-circle">
+                <User size={20} strokeWidth={1.5} />
+              </div>
+              <div className="profile-text">
+                <span className="profile-name">Mahi</span>
+              </div>
+            </div>
+            <button className="profile-settings-btn" onClick={() => { navigate('/settings'); closeOnMobile(); }}>
+              <Settings size={18} strokeWidth={1.5} />
+            </button>
+          </div>
         </div>
       </aside>
     </>

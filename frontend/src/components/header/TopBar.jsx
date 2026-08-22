@@ -1,39 +1,48 @@
-import React from 'react';
-import { Search, Bell, Menu } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Search, Bell, Menu, UploadCloud, FolderPlus } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import UploadModal from '../common/UploadModal';
 import './TopBar.css';
 
 function TopBar({ toggleSidebar }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const isDocumentPage = location.pathname.startsWith('/documents/');
+  const [isUploadModalOpen, setUploadModalOpen] = useState(false);
 
   return (
-    <header className="topbar">
-      <div className="topbar-left">
-        <button className="menu-btn" onClick={toggleSidebar}>
-          <Menu size={20} />
-        </button>
-        
-        {!isDocumentPage && (
-          <div className="search-container">
-            <Search size={16} className="search-icon" />
-            <input type="text" placeholder="Search documents..." className="search-input" />
-          </div>
-        )}
-      </div>
-
-      <div className="topbar-right">
-        {isDocumentPage && (
-          <button className="btn-share">
-            Share
+    <>
+      <header className="topbar">
+        <div className="topbar-left">
+          <button className="menu-btn" onClick={toggleSidebar} aria-label="Toggle navigation menu">
+            <Menu size={20} />
           </button>
-        )}
-        <button className="icon-btn">
-          <Bell size={20} />
-        </button>
-        <div className="profile-avatar">U</div>
-      </div>
-    </header>
+        </div>
+
+        <div className="topbar-right">
+          <button className="topbar-action-btn" onClick={() => setUploadModalOpen(true)} aria-label="Upload document">
+            <UploadCloud size={18} strokeWidth={1.5} />
+            Upload
+          </button>
+          
+          <button className="topbar-action-btn" onClick={() => navigate('/workspaces')} aria-label="Go to workspaces">
+            <FolderPlus size={18} strokeWidth={1.5} />
+            Workspaces
+          </button>
+
+          {isDocumentPage && (
+            <button className="btn-share">
+              Share
+            </button>
+          )}
+        </div>
+      </header>
+
+      <UploadModal 
+        isOpen={isUploadModalOpen} 
+        onClose={() => setUploadModalOpen(false)} 
+      />
+    </>
   );
 }
 
