@@ -70,8 +70,7 @@ Retrieval-Augmented Generation (RAG) pipelines — including hybrid search, chun
 vector retrieval, re-ranking, and citation-backed generation — and built a strong foundation in
 problem-solving, documentation, collaboration, and delivering real-world AI solutions.
 
-The course progressed through a series of assignments (see
-[`Assignments/README.md`](./Assignments/README.md) for the full index), starting with LLM concepts,
+The course progressed through a series of assignments , starting with LLM concepts,
 followed by Python programming, then AI-agent and agent-based development, and finally advanced
 tasks that combined these skills into working applications.
 
@@ -80,8 +79,6 @@ tasks that combined these skills into working applications.
 ### Project: Intelligent Knowledge Discovery Platform (IKDP)
 
 This Project involved designing and developing an AI-powered knowledge discovery platform that analyzes uploaded documents, organizes research workspaces, and generates grounded insights, summaries, and answers with strict citations. It focused on understanding requirements, building structured code, and implementing key features such as document upload, vector search, and citation-backed generation — applying the LLM, Python and AI-agent concepts learned in the GenAI assignments.
-
-> → View Full Project Report: [`Course report/SURE Trust project document.docx`](./Course%20report)
 
 ---
 
@@ -105,13 +102,6 @@ During my internship period, I participated in multiple community-oriented activ
 - Actively participated in promoting a greener and cleaner surroundings.
 - Offered personal assistance to elder citizens, strengthening community bonds.
 - Improved skills in communication, coordination, and social responsibility.
-
-### Photos
-
-Community Service Photo 1 | Community Service Photo 2 |
-:---: | :---: | 
-![Photo 1](./images/Plantation.jpeg) | ![Photo 2](./images/community-2.jpg) |
-
 ---
 
 ## Certificate
