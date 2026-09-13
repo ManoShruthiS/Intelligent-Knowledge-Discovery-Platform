@@ -1,0 +1,136 @@
+.cp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+  animation: cp-fade-in 0.15s ease-out;
+}
+
+@keyframes cp-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.cp-modal {
+  width: 100%;
+  max-width: 540px;
+  background: #fff;
+  border: 1px solid var(--c-e5, #e5e5e5);
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  animation: cp-slide-in 0.15s ease-out;
+}
+
+@keyframes cp-slide-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.cp-search-row {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 10px;
+}
+
+.cp-search-icon {
+  color: var(--c-888, #888);
+  flex-shrink: 0;
+}
+
+.cp-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 14px 0;
+  font-size: 15px;
+  background: transparent;
+  color: var(--c-111, #111);
+  border-radius: 0;
+}
+
+.cp-search-input::placeholder {
+  color: var(--c-aaa, #aaa);
+}
+
+.cp-kbd {
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+  font-size: 11px;
+  padding: 2px 6px;
+  border: 1px solid var(--c-e5, #e5e5e5);
+  border-radius: 4px;
+  background: var(--c-f5, #f5f5f5);
+  color: var(--c-888, #888);
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.cp-divider {
+  height: 1px;
+  background: var(--c-e5, #e5e5e5);
+}
+
+.cp-results {
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 6px;
+}
+
+.cp-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--c-888, #888);
+  padding: 8px 10px 4px;
+}
+
+.cp-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.cp-item:hover,
+.cp-selected {
+  background: var(--c-f5, #f5f5f5);
+}
+
+.cp-item-icon {
+  color: var(--c-888, #888);
+  flex-shrink: 0;
+}
+
+.cp-item-label {
+  flex: 1;
+  font-size: 14px;
+  color: var(--c-111, #111);
+}
+
+.cp-item-arrow {
+  color: var(--c-ccc, #ccc);
+  opacity: 0;
+  transition: opacity 0.1s;
+  flex-shrink: 0;
+}
+
+.cp-selected .cp-item-arrow {
+  opacity: 1;
+}
+
+.cp-empty {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--c-888, #888);
+  font-size: 14px;
+}

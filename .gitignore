@@ -1,0 +1,103 @@
+# =============================================================================
+# KNO — Intelligent Knowledge Discovery Platform
+# .gitignore (project-level: applies under Final capstone project/Intelligent-Knowledge-Discovery-Platform/)
+# =============================================================================
+
+# ---- Python ----
+__pycache__/
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ---- Python virtual environments ----
+venv/
+.venv/
+env/
+.env-venv/
+
+# ---- Python package build artifacts ----
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+
+# ---- Python tooling caches ----
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+.tox/
+*.cover
+
+# ---- Node / Vite / React ----
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+
+# ---- Logs ----
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+backend/backend.log
+backend/backend.err.log
+
+# ---- Environment / secrets ----
+# Ignore actual env files but keep the example template tracked
+.env
+.env.*
+!.env.example
+
+# ---- IDE / OS ----
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+
+# ---- Runtime data (regeneratable, contains user content) ----
+# SQLite database
+*.db
+*.sqlite
+*.sqlite3
+
+# FAISS / BM25 indexes — built at startup
+backend/data/vector_store/
+
+# Uploaded user files
+backend/data/uploads/
+backend/uploads/
+
+# Test fixtures / reports
+backend/e2e_test_files/
+backend/e2e_report.txt
+backend/test_outputs/
+
+# ---- Local dev / AI helper files (not part of the app) ----
+project_context_for_minimax.txt
+.kno-context/

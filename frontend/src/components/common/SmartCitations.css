@@ -1,0 +1,147 @@
+.smart-citations {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--c-eee, #eee);
+  font-size: 0.85rem;
+}
+
+.smart-citations-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--c-777, #777);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.smart-citations-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.smart-citation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.smart-citation-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.82rem;
+  color: var(--c-333, #333);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.smart-citation-btn:hover,
+.smart-citation-btn:focus-visible {
+  background: var(--c-bg-hover, #f3f5fa);
+  outline: none;
+}
+
+.smart-citation-num {
+  font-weight: 600;
+  color: var(--c-333, #222);
+  flex-shrink: 0;
+}
+
+
+
+.smart-citation-supporting {
+  border-left: 3px solid #16a34a;
+}
+
+.smart-citation-supporting .smart-citation-icon,
+.smart-citation-supporting .smart-citation-class {
+  color: #16a34a;
+}
+
+.smart-citation-supporting .smart-citation-btn {
+  background: rgba(22, 163, 74, 0.06);
+}
+
+.smart-citation-supporting .smart-citation-btn:hover {
+  background: rgba(22, 163, 74, 0.12);
+}
+
+.smart-citation-contradicting {
+  border-left: 3px solid #dc2626;
+}
+
+.smart-citation-contradicting .smart-citation-icon,
+.smart-citation-contradicting .smart-citation-class {
+  color: #dc2626;
+}
+
+.smart-citation-contradicting .smart-citation-btn {
+  background: rgba(220, 38, 38, 0.05);
+}
+
+.smart-citation-contradicting .smart-citation-btn:hover {
+  background: rgba(220, 38, 38, 0.11);
+}
+
+.smart-citation-mentioning,
+.smart-citation-neutral {
+  border-left: 3px solid #94a3b8;
+}
+
+.smart-citation-mentioning .smart-citation-icon,
+.smart-citation-mentioning .smart-citation-class,
+.smart-citation-neutral .smart-citation-icon,
+.smart-citation-neutral .smart-citation-class {
+  color: #64748b;
+}
+
+.smart-citation-mentioning .smart-citation-btn,
+.smart-citation-neutral .smart-citation-btn {
+  background: rgba(100, 116, 139, 0.05);
+}
+
+.smart-citation-icon {
+  flex-shrink: 0;
+}
+
+.smart-citation-class {
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.smart-citation-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--c-555, #555);
+  font-size: 0.78rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 320px;
+}
+
+.smart-citation-conf {
+  font-size: 0.72rem;
+  color: var(--c-777, #888);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.smart-citation-reason {
+  margin-left: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--c-666, #666);
+  font-style: italic;
+}
